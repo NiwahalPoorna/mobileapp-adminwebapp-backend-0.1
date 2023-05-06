@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
       seatCount: req.body.seatCount,
       totalPrice: req.body.totalPrice,
       date: req.body.date,
-        email:req.body.email,
+      email: req.body.email,
       //   date:req.body.date,
     });
 
@@ -35,6 +35,35 @@ router.post("/", async (req, res) => {
       // Handle other errors
       res.status(500).json({ message: "An error occurred" });
     }
+  }
+});
+
+router.get("/details", async (req, res) => {
+  try {
+    console.log(req.query);
+    const { email } = req.query;
+
+    // Query the database or other data source for bookings with the specified email
+    const bookings = await booking.find({ email });
+    console.log(bookings);
+
+    // Return the booking data in the response body
+    res.status(200).json(bookings);
+  } catch (error) {
+    // Handle any errors and return an error response
+    console.error(error);
+    res.status(500).json({ message: "Error retrieving booking data" });
+  }
+});
+
+// Define a route that returns all the bookings
+router.get("/all-bookings", async (req, res) => {
+  try {
+    const bookings = await booking.find();
+    res.json(bookings);
+  } catch (error) {
+    console.log(error);
+    res.status(500).send("Internal server error");
   }
 });
 

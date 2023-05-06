@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const busSchema = new mongoose.Schema({
-  _id:{
+  routeNumber: {
     type: String,
   },
   origin: {
-    type: String,
+    type: String, 
   },
   destination: {
     type: String,
@@ -32,3 +32,35 @@ const busSchema = new mongoose.Schema({
 
 const Bus = new mongoose.model("Bus", busSchema);
 module.exports = Bus;
+
+
+  // _id: {
+  //   type: String,
+  // },
+  // arriveTime
+// : 
+// "10.00AM"
+// busNumber
+// : 
+// "bus102"
+// date
+// : 
+// "2023-05-20"
+// destination
+// : 
+// "maharagama"
+// origin
+// : 
+// "kadawatha"
+// otherDetails
+// : 
+// "ac-bus"
+// price
+// : 
+// "1100"
+// routeNumber
+// : 
+// "100"
+// startTime
+// : 
+// "07.00AM"
