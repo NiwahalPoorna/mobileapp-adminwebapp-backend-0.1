@@ -31,6 +31,10 @@ const bookingSchema = new mongoose.Schema({
   email: {
     type: String,
   },
+  seats: {
+    type: [Number],
+    default: [],
+  },
 });
 
 const booking = mongoose.model("booking", bookingSchema);

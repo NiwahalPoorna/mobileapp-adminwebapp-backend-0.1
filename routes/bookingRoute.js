@@ -19,6 +19,7 @@ router.post("/", async (req, res) => {
       totalPrice: req.body.totalPrice,
       date: req.body.date,
       email: req.body.email,
+      seats: req.body.seats,
       //   date:req.body.date,
     });
 
