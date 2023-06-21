@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
       date: req.body.date,
       email: req.body.email,
       seats: req.body.seats,
-      //   date:req.body.date,
+      status:req.body.status,
     });
 
     // Save the new Admin document to the database
@@ -69,3 +69,70 @@ router.get("/all-bookings", async (req, res) => {
 });
 
 module.exports = router;
+
+
+router.get('/seats', (req, res) => {
+  const { date, startTime, busNumber,email} = req.query;
+  
+  let allSeats = [];
+  // Filter the booking records based on the provided parameters
+ // Find the matching booking record
+ booking.find({ date ,startTime,busNumber,email})
+    .then(bookings => {
+      if (bookings) {
+        allSeats = bookings.reduce((seats, booking) => seats.concat(booking.seats), []);
+
+        res.json(allSeats);
+        // res.json(bookings);
+
+        console.log(allSeats);
+      } else {
+        res.json(null);
+      }
+    })
+    .catch(error => {
+      console.error('Error retrieving booking record', error);
+      res.status(500).json({ error: 'Failed to retrieve booking record' });
+    });
+});
+
+// http://localhost:3000//booking/seats?date=2023-05-01&startTime=8:00AM&busNumber=BUS100
+
+
+router.get('/bookings/:_id', async (req, res) => {
+  try {
+    const bookingId = req.params._id;
+    const Booking = await booking.findById(bookingId);
+
+    if (Booking) {
+      res.json(Booking);
+    } else {
+      res.status(404).json({ error: 'Booking not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching booking data:', error);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
+
+
+
+
+router.put('/bookings/:id', async (req, res) => {
+  try {
+    const bookingId = req.params.id;
+    const { status } = req.body;
+
+    // Update the booking in the database
+    const updatedBooking = await booking.findByIdAndUpdate(bookingId, { status }, { new: true });
+
+    res.json(updatedBooking);
+  } catch (error) {
+    console.log('Error updating booking status:', error);
+    res.status(500).json({ error: 'Error updating booking status' });
+  }
+});
+
+

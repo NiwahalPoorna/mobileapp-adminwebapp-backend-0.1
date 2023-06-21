@@ -35,6 +35,9 @@ const bookingSchema = new mongoose.Schema({
     type: [Number],
     default: [],
   },
+  status:{
+    type: String,
+  }
 });
 
 const booking = mongoose.model("booking", bookingSchema);
